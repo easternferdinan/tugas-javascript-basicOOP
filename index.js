@@ -6,55 +6,83 @@ class Table {
     createHeader(data) {
         let openingTags = '<thead class="table-content thead-dark"><tr>';
         let closingTags = '</tr></thead>';
-    
+
         data.forEach(datum => {
             openingTags += `<th>${datum}</th>`;
         });
-    
+
         return openingTags + closingTags;
     }
 
     createBody(data) {
         let openingTags = '<tbody class="table-content"><tr>';
         let closingTags = '</tr></tbody>';
-    
-        data.forEach(datum => {
+
+        for (const teamName in data) {
             openingTags += `<tr>
-            <td>${datum[0]}</td>
-            <td>${datum[1]}</td>
-            <td>${datum[2]}</td>
-            </tr>`;
-        });
-    
+            <td>${teamName}</td>
+            <td>${data[teamName].driver[0]}</td>
+            <td>${data[teamName].driver[1]}</td>
+            <td>${data[teamName].homebase}</td>`
+        }
+
         return openingTags + closingTags;
     }
 
     render(elementSelector) {
         let table = `<table class="table table-striped text-center table-bordered">
-        ${this.createHeader(this.init.header)}
-        ${this.createBody(this.init.team)}
+        ${this.createHeader(this.init.columns)}
+        ${this.createBody(this.init.teams)}
         </table>`;
 
-        // console.log(elementSelector.innerHTML = table)
         elementSelector.innerHTML = table;
     }
 }
 
-
-const entryList = new Table ({
-    header: ["Team", "Driver", "Homebase"],
-    team: [
-        ["Mercedes-AMG Petronas Formula 1 Team", "Lewis Hamilton, George Russel", "Great Britain"], 
-        ["Oracle Red Bull Racing", "Max Verstappen, Sergio Perez", "Austria"], 
-        ["Scuderia Ferrari", "Charles Leclerc, Carlos Sainz", "Italy"], 
-        ["McLaren Formula 1 Team", "Lando Norris, Oscar Piatri", "Great Britain"], 
-        ["BWT Alpine F1 Team", "Esteban Ocon, Pierre Gasly", "France"], 
-        ["Alfa Romeo F1 Team Orlen", "Valtteri Bottas, Guanyu Zhou", "Italy"], 
-        ["Aston Martin Aramco Cognizant F1 Team", "Lance Stroll, Fernando Alonso", "Great Britain"], 
-        ["MoneyGram Haas F1 Team", "Kevin Magnussen, Nico Hulkenberg", "United States of America"], 
-        ["Scuderia AlphaTauri", "Nyck de Vries, Yuki Tsunoda", "Italy"], 
-        ["Williams Racing", "Alex Albon, Logan Sargeant", "Great Britain"],
-    ],
+const entryList = new Table({
+    "columns": ["Team", "Driver 1", "Driver 2", "Origin"],
+    "teams":{
+        "Mercedes-AMG Petronas Formula 1 Team": {
+            "driver": ["Lewis Hamilton", "George Russel"],
+            "homebase": "Germany"
+        },
+        "Oracle Red Bull Racing": {
+            "driver": ["Max Verstappen", "Sergio Perez"],
+            "homebase": "Austria"
+        },
+        "Scuderia Ferrari": {
+            "driver": ["Charles Leclerc", "Carlos Sainz"],
+            "homebase": "Italy"
+        },
+        "McLaren Formula 1 Team": {
+            "driver": ["Lando Norris", "Oscar Piatri"],
+            "homebase": "Great Britain"
+        },
+        "BWT Alpine F1 Team": {
+            "driver": ["Esteban Ocon", "Pierre Gasly"],
+            "homebase": "France"
+        },
+        "Alfa Romeo F1 Team Orlen": {
+            "driver": ["Valtteri Bottas", "Guanyu Zhou"],
+            "homebase": "Italy"
+        },
+        "Aston Martin Aramco Cognizant F1 Team": {
+            "driver": ["Lance Stroll", "Fernando Alonso"],
+            "homebase": "Great Britain"
+        },
+        "MoneyGram Haas F1 Team": {
+            "driver": ["Kevin Magnussen", "Nico Hulkenberg"],
+            "homebase": "United States of America"
+        },
+        "Scuderia AlphaTauri": {
+            "driver": ["Nyck de Vries", "Yuki Tsunoda"],
+            "homebase": "Italy"
+        },
+        "Williams Racing": {
+            "driver": ["Alex Albon", "Logan Sargeant"],
+            "homebase": "Great Britain"
+        }
+    }
 });
 
 const selector = document.querySelector(".dynamicTable");
